@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors')
-const db = require('./database')
 const candidateRoutes = require('./routes/candidateRoutes')
 
 require('dotenv').config();
@@ -12,6 +11,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cors())
 
-app.use('api/vi/backend', candidateRoutes)
+app.use('/api/vi/backend', candidateRoutes)
 
 module.exports = app

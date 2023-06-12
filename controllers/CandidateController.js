@@ -179,6 +179,18 @@ exports.addProduct = async (req, res, next) => {
 
         const { product_id, quantity } = req?.body
 
+        const productById = await UserProductModel.findOneAndUpdate({
+            user_id: userId,
+            product_id: product_id
+        }, { quantity });
+
+        if (productById){
+            return res.status(status?.success).json({
+                error: false,
+                msg: 'Product Added successfully'
+            })
+        }
+
         const product = new UserProductModel({
             user_id: userId,
             product_id,
@@ -187,9 +199,9 @@ exports.addProduct = async (req, res, next) => {
 
         await product.save()
 
-        const products = await UserProductModel.findById(product?._id).populate('product_id');
+        // const products = await UserProductModel.findById(product?._id).populate('product_id');
 
-        console.log(products)
+        // console.log(products)
 
         return res.status(status?.success).json({
             error: false,
